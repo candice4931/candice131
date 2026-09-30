@@ -65,7 +65,7 @@ label{display:block;font-size:12px;color:#71645e;margin-bottom:6px}
   <div class="nav">
     <button class="active" data-page="home">⌂　今日工作台</button>
     <button data-page="engine">✦　一題多平台</button>
-    <button data-page="ideas">◇　選題冰箱</button>
+    <button data-page="ideas">◇　選題百寶箱</button>
     <button data-page="script">◉　口播工廠</button>
     <button data-page="plan">▦　排程看板</button>
     <button data-page="library">💌　文案庫</button>
@@ -84,7 +84,7 @@ label{display:block;font-size:12px;color:#71645e;margin-bottom:6px}
   <div class="grid">
     <div class="card span3"><h4>今日核心主題</h4><div class="metric">1</div><div class="muted">一天先做好一個核心觀點</div></div>
     <div class="card span3"><h4>本週已發布</h4><div class="metric" id="weekCount">0</div><div class="muted">四平台內容都可計入</div><div class="progress"><i id="weekBar"></i></div></div>
-    <div class="card span3"><h4>選題庫</h4><div class="metric" id="ideaCount">4</div><div class="muted">把靈感先放冰箱</div></div>
+    <div class="card span3"><h4>選題庫</h4><div class="metric" id="ideaCount">4</div><div class="muted">把靈感先放百寶箱</div></div>
     <div class="card span3"><h4>文案資產</h4><div class="metric" id="capCount">0</div><div class="muted">之後可重複使用</div></div>
 
     <div class="card span8">
@@ -131,11 +131,11 @@ label{display:block;font-size:12px;color:#71645e;margin-bottom:6px}
 </section>
 
 <section class="page" id="ideas">
-  <div class="hero"><h3>選題冰箱</h3><p>你想到什麼先丟進來。之後不用每天從零開始想題目。</p></div>
+  <div class="hero"><h3>選題百寶箱</h3><p>你想到什麼先丟進來。之後不用每天從零開始想題目。</p></div>
   <div class="grid">
     <div class="card span4"><h4>新增選題</h4><label>題目</label><input id="ideaInput" placeholder="例如：真正高能量的人，不急著證明自己">
       <br><label>分類</label><select id="ideaType"><option>能量</option><option>顯化</option><option>女性成長</option><option>關係</option><option>生活</option><option>金錢</option>
-      </select><br><br><button onclick="addIdea()">放進冰箱</button></div>
+      </select><br><br><button onclick="addIdea()">放進百寶箱</button></div>
     <div class="card span8"><h4>我的選題庫</h4><div id="ideaList"></div></div>
   </div>
 </section>
@@ -271,7 +271,7 @@ async function cloudSignOut(){if(!sb)return; await sb.auth.signOut();cloudUser=n
 function loadCloudConfig(){const c=getCloudConfig();if(c){$('sbUrl').value=c.url||'';$('sbKey').value=c.key||'';initSupabase();}}
 let currentOut='fb', genSections=[];
 
-const pages={home:'今日工作台',engine:'一題多平台',ideas:'選題冰箱',script:'口播工廠',plan:'排程看板',library:'文案庫',stats:'成效紀錄',settings:'我的設定'};
+const pages={home:'今日工作台',engine:'一題多平台',ideas:'選題百寶箱',script:'口播工廠',plan:'排程看板',library:'文案庫',stats:'成效紀錄',settings:'我的設定'};
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 function showPage(p){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));
@@ -345,7 +345,7 @@ function renderIdeas(){
   $('ideaList').innerHTML=l.map(i=>`<div class="item"><strong>${i.title}</strong><small><span class="tag">${i.type}</span>　<button class="ghost" onclick="useIdea(${JSON.stringify(i.title)})">做成內容</button> <button class="ghost" onclick="delIdea('${i.id}')">刪除</button></small></div>`).join('');
   $('ideaCount').textContent=l.length;
 }
-function addIdea(){const t=esc($('ideaInput').value);if(!t)return;const l=load(K.ideas);l.unshift({id:uid(),title:t,type:$('ideaType').value});save(K.ideas,l);$('ideaInput').value='';renderIdeas();toast('已放進選題冰箱')}
+function addIdea(){const t=esc($('ideaInput').value);if(!t)return;const l=load(K.ideas);l.unshift({id:uid(),title:t,type:$('ideaType').value});save(K.ideas,l);$('ideaInput').value='';renderIdeas();toast('已放進選題百寶箱')}
 function delIdea(id){save(K.ideas,load(K.ideas).filter(x=>x.id!==id));renderIdeas()}
 function addTask(){
   const t={id:uid(),date:$('taskDate').value||today(),platform:$('taskPlatform').value,type:$('taskType').value,title:esc($('taskTitle').value),caption:$('taskCaption').value,done:false};
