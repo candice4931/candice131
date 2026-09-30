@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>甜甜｜身心靈內容工作 OS</title>
+<style>
+:root{
+  --bg:#FBF3F0;--card:#fff;--primary:#F2B8B0;--primary-d:#D98278;
+  --sage:#C9D6C5;--text:#4A3B36;--muted:#8A7A74;--line:#F0E0DA;
+  --purple:#D8D0E8;--blue:#B8C9F2;--shadow:0 8px 25px rgba(80,55,45,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",sans-serif}
+button,input,select,textarea{font-family:inherit}
+button{border:0;border-radius:12px;padding:9px 14px;background:var(--primary);color:var(--text);font-weight:600;cursor:pointer}
+button:hover{filter:brightness(.97)}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--muted);font-weight:500}
+button.sage{background:var(--sage)}
+button.dark{background:#6f5a50;color:white}
+input,select,textarea{width:100%;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:11px;padding:10px 11px;font-size:14px;outline:none}
+textarea{min-height:110px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:#d9a79e;box-shadow:0 0 0 3px #f8e8e4}
+.app{display:flex;min-height:100vh}
+.sidebar{width:235px;background:#fffaf7;border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh}
+.brand{padding:6px 12px 20px;border-bottom:1px solid var(--line);margin-bottom:15px}
+.brand .mark{font-size:25px}.brand h1{font-size:18px;margin:5px 0}.brand p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
+.nav button{width:100%;background:transparent;text-align:left;color:#665b55;margin:2px 0;padding:11px 12px}
+.nav button.active,.nav button:hover{background:#f5e8e4;color:#704f45}
+.side-note{margin:20px 9px 0;padding:12px;background:#f6eee9;border-radius:12px;color:#766a63;font-size:12px;line-height:1.7}
+.main{flex:1;min-width:0}.topbar{height:70px;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:5}
+.topbar h2{font-size:18px;margin:0}.date{font-size:12px;color:var(--muted)}
+.wrap{padding:26px;max-width:1400px;margin:auto}.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(120deg,#fffaf7,#f4e5e0);border:1px solid var(--line);border-radius:21px;padding:23px;margin-bottom:18px;box-shadow:var(--shadow)}
+.hero h3{margin:0 0 7px;font-size:23px}.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:15px}.span3{grid-column:span 3}.span4{grid-column:span 4}.span6{grid-column:span 6}.span8{grid-column:span 8}.span12{grid-column:span 12}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.card h4{margin:0 0 12px;font-size:15px}.muted{font-size:12px;color:var(--muted);line-height:1.65}
+.metric{font-size:27px;font-weight:700;color:var(--primary-d);margin:4px 0}.tag{display:inline-block;background:var(--sage);color:#33422f;border-radius:99px;padding:4px 9px;font-size:11px;margin:2px}.tag.ig{background:var(--primary)}.tag.fb{background:var(--blue)}.tag.th{background:var(--purple)}
+.progress{height:7px;background:#eee5e0;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:var(--primary-d);width:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row>*{flex:1;min-width:120px}.row button{flex:0 0 auto}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}
+label{display:block;font-size:12px;color:#71645e;margin-bottom:6px}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}.tab{background:#fff;border:1px solid var(--line);border-radius:99px;padding:8px 12px;font-size:12px}.tab.on{background:#f2e2dd;color:#704d43}
+.output{white-space:pre-wrap;background:#fffaf7;border:1px solid var(--line);border-radius:12px;padding:15px;line-height:1.75;font-size:14px;min-height:180px}
+.item{padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:9px}.item strong{font-size:13px}.item small{display:block;color:var(--muted);margin-top:4px}
+.list{display:flex;flex-direction:column;gap:9px}.empty{text-align:center;color:#aaa09a;padding:20px;font-size:13px}
+.check{display:flex;gap:8px;align-items:center;padding:7px 0;font-size:13px}.check input{width:auto}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.col{background:#f1ece8;border-radius:14px;padding:12px;min-height:260px}.col h5{margin:2px 4px 10px}.board-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;font-size:12px}.board-card b{display:block;margin-bottom:5px}
+.stat-card{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.stat-card strong{font-size:18px;color:var(--primary-d)}
+.notice{padding:10px 12px;background:#f7eee9;border-radius:11px;font-size:12px;color:#746862;line-height:1.65}
+.toast{position:fixed;right:22px;bottom:22px;background:#332d29;color:#fff;padding:11px 16px;border-radius:11px;display:none;z-index:20}
+.small{font-size:11px;color:var(--muted)}
+@media(max-width:900px){.sidebar{width:205px}.span3,.span4,.span6,.span8{grid-column:span 12}.board{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){
+  .app{display:block}.sidebar{position:static;width:100%;height:auto;padding:11px}.nav{display:flex;overflow:auto}.nav button{width:auto;white-space:nowrap}.side-note{display:none}
+  .topbar{padding:0 14px}.topbar h2{font-size:16px}.date{display:none}.wrap{padding:14px}.board{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="mark">♡ ✦</div><h1>甜甜｜身心靈內容 OS</h1><p>身心靈老師 × 個人 IP × 多平台內容</p></div>
+  <div class="nav">
+    <button class="active" data-page="home">⌂　今日工作台</button>
+    <button data-page="engine">✦　一題多平台</button>
+    <button data-page="ideas">◇　選題百寶箱</button>
+    <button data-page="script">◉　口播工廠</button>
+    <button data-page="plan">▦　排程看板</button>
+    <button data-page="library">💌　文案庫</button>
+    <button data-page="stats">↗　成效紀錄</button>
+    <button data-page="settings">⚙　我的設定</button>
+  </div>
+  <div class="side-note"><b>你的內容流程</b><br>想法 → 一題多平台 → 口播 → 排程 → 發布 → 記錄成效</div>
+</aside>
+
+<main class="main">
+<div class="topbar"><h2 id="pageTitle">今日工作台</h2><div class="date" id="todayDate"></div></div>
+<div class="wrap">
+
+<section class="page active" id="home">
+  <div class="hero"><h3>今天不用再想「我要發什麼」</h3><p>先挑一個你真的有感覺的主題。這個工作台會把它整理成 FB、IG、Threads、60 秒口播，再放進你的排程。</p></div>
+  <div class="grid">
+    <div class="card span3"><h4>今日核心主題</h4><div class="metric">1</div><div class="muted">一天先做好一個核心觀點</div></div>
+    <div class="card span3"><h4>本週已發布</h4><div class="metric" id="weekCount">0</div><div class="muted">四平台內容都可計入</div><div class="progress"><i id="weekBar"></i></div></div>
+    <div class="card span3"><h4>選題庫</h4><div class="metric" id="ideaCount">4</div><div class="muted">把靈感先放百寶箱</div></div>
+    <div class="card span3"><h4>文案資產</h4><div class="metric" id="capCount">0</div><div class="muted">之後可重複使用</div></div>
+
+    <div class="card span8">
+      <h4>今天建議直接做這題</h4>
+      <div class="item"><strong>你不是沒能量，是每天把能量花在不值得的人身上</strong><small>適合：Threads 共鳴＋IG 貼文＋FB 延伸＋60 秒口播</small></div>
+      <button onclick="useIdea('你不是沒能量，是每天把能量花在不值得的人身上')">直接開始製作 →</button>
+    </div>
+    <div class="card span4">
+      <h4>今天完成 4 步</h4>
+      <label class="check"><input type="checkbox"> 完成核心選題</label>
+      <label class="check"><input type="checkbox"> 產出四平台內容</label>
+      <label class="check"><input type="checkbox"> 錄好口播</label>
+      <label class="check"><input type="checkbox"> 發布＋記錄成效</label>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="engine">
+  <div class="hero"><h3>一題多平台｜你的內容主引擎</h3><p>這裡是整個平台最重要的地方：你只需要輸入「你真正想講什麼」，再讓系統幫你拆成不同平台的版本。</p></div>
+  <div class="grid">
+    <div class="card span4">
+      <h4>① 輸入你的想法</h4>
+      <label>核心主題</label><input id="topic" placeholder="例如：為什麼越討好別人，能量越低？">
+      <br><label>內容方向</label><select id="pillar"><option>能量／吸引力法則</option><option>顯化／金錢</option><option>女性成長</option><option>關係／界線</option><option>生活觀點</option><option>媽媽日常</option></select>
+      <br><label>語氣</label><select id="tone"><option>清醒、直白、有力量</option><option>像跟朋友聊天</option><option>溫暖但有乾貨</option><option>生活化、有觀點</option></select>
+      <br><label>你的真實觀點／故事</label><textarea id="story" placeholder="把你平常會講的話直接打進來，不用修飾。"></textarea>
+      <div class="row"><button onclick="generateLocal()">先用內建模板產出</button><button class="dark" onclick="generateAI()">✨ Claude AI 產出</button></div>
+      <p class="small">AI 功能保留 Claude Artifact 的 sample API；若離開 Claude 以一般 HTML 開啟，AI 按鈕可能無法使用，但內建模板仍可使用。</p>
+    </div>
+    <div class="card span8">
+      <div class="tabs">
+        <button class="tab on" onclick="showOut('fb',this)">FB</button>
+        <button class="tab" onclick="showOut('ig',this)">IG</button>
+        <button class="tab" onclick="showOut('threads',this)">Threads</button>
+        <button class="tab" onclick="showOut('reels',this)">60秒口播</button>
+      </div>
+      <div id="fb" class="output">輸入主題後，這裡會出現 FB 完整貼文。</div>
+      <div id="ig" class="output" style="display:none"></div>
+      <div id="threads" class="output" style="display:none"></div>
+      <div id="reels" class="output" style="display:none"></div>
+      <br><div class="row"><button class="ghost" onclick="copyCurrent()">複製目前文案</button><button class="sage" onclick="saveAllAsTasks()">全部存進排程</button><button onclick="saveCurrentCaption()">存進文案庫</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="ideas">
+  <div class="hero"><h3>選題百寶箱</h3><p>你想到什麼先丟進來。之後不用每天從零開始想題目。</p></div>
+  <div class="grid">
+    <div class="card span4"><h4>新增選題</h4><label>題目</label><input id="ideaInput" placeholder="例如：真正高能量的人，不急著證明自己">
+      <br><label>分類</label><select id="ideaType"><option>能量</option><option>顯化</option><option>女性成長</option><option>關係</option><option>生活</option><option>金錢</option>
+      </select><br><br><button onclick="addIdea()">放進百寶箱</button></div>
+    <div class="card span8"><h4>我的選題庫</h4><div id="ideaList"></div></div>
+  </div>
+</section>
+
+<section class="page" id="script">
+  <div class="hero"><h3>口播文案工廠</h3><p>專門做你現在最常用的 30–60 秒口播：開頭直接上痛點 → 觀點 → 3 個具體做法 → CTA。</p></div>
+  <div class="grid">
+    <div class="card span4"><h4>口播設定</h4><label>主題</label><input id="scriptTopic" placeholder="例如：為什麼最近一直覺得很累？">
+      <br><label>影片長度</label><select id="scriptLen"><option>30 秒</option><option selected>60 秒</option><option>90 秒</option></select>
+      <br><label>CTA</label><input id="cta" value="留言「能量」我把能量檢測方式給你">
+      <br><label>你想補充的內容</label><textarea id="scriptNote" placeholder="你的故事、案例、想講的3件事"></textarea>
+      <button onclick="makeScript()">生成口播</button>
+    </div>
+    <div class="card span8"><h4>可直接拿去錄</h4><div id="scriptOut" class="output">你的口播會放在這裡。重點不是寫得漂亮，而是像你真的會講出口。</div><br><button class="ghost" onclick="copyId('scriptOut')">複製口播</button><button class="sage" onclick="saveScript()">存進排程</button></div>
+  </div>
+</section>
+
+<section class="page" id="plan">
+  <div class="hero"><h3>排程看板</h3><p>把「我想做」變成「已經排好」。可以直接新增排程，也可以從內容引擎一鍵存入。</p></div>
+  <div class="grid">
+    <div class="card span4"><h4>新增排程</h4><label>日期</label><input type="date" id="taskDate"><br><label>平台</label><select id="taskPlatform"><option>IG</option><option>FB</option><option>Threads</option><option>Reels</option></select><br><label>類型</label><select id="taskType"><option>貼文</option><option>口播</option><option>限動</option></select><br><label>主題</label><input id="taskTitle" placeholder="主題／標題"><br><label>文案</label><textarea id="taskCaption"></textarea><button onclick="addTask()">加入排程</button></div>
+    <div class="card span8"><div class="row"><select id="taskFilter" onchange="renderTasks()"><option value="">全部平台</option><option>IG</option><option>FB</option><option>Threads</option><option>Reels</option></select><button class="ghost" onclick="applyWeekPlan()">套用7天內容計畫</button></div><div id="taskList"></div></div>
+  </div>
+</section>
+
+<section class="page" id="library">
+  <div class="hero"><h3>文案庫</h3><p>把你覺得好用的句子、CTA、開頭、產品文案全部存下來，之後不用重新寫。</p></div>
+  <div class="grid">
+    <div class="card span4"><h4>新增文案</h4><label>標籤</label><input id="capTag" placeholder="例如：開頭／CTA／能量／銷售"><br><label>平台</label><select id="capPlatform"><option>通用</option><option>IG</option><option>FB</option><option>Threads</option><option>Reels</option></select><br><label>內容</label><textarea id="capContent"></textarea><button onclick="addCaption()">儲存到文案庫</button></div>
+    <div class="card span8"><div class="row"><input id="capSearch" placeholder="搜尋標籤或關鍵字" oninput="renderCaptions()"><button class="ghost" onclick="exportCSV('captions')">匯出 CSV</button></div><div id="captionList"></div></div>
+  </div>
+</section>
+
+<section class="page" id="stats">
+  <div class="hero"><h3>成效紀錄</h3><p>不要只憑感覺判斷哪個題目好。記錄觀看、互動、收藏、分享與留言，慢慢找到你的高反應題型。</p></div>
+  <div class="grid">
+    <div class="card span4"><h4>新增紀錄</h4><label>日期</label><input type="date" id="statDate"><br><label>主題</label><input id="statTopic" placeholder="例如：洗廁所提升財運"><br><label>平台</label><select id="statPlatform"><option>IG Reels</option><option>Threads</option><option>FB</option><option>IG 貼文</option></select><br><label>觀看／曝光</label><input type="number" id="views"><br><label>互動</label><input type="number" id="engage"><br><button onclick="addStat()">儲存成效</button></div>
+    <div class="card span8"><h4>近期紀錄</h4><div id="statsList"></div></div>
+    <div class="card span12"><h4>簡單看板</h4><div id="statSummary" class="grid"></div></div>
+  </div>
+</section>
+
+<section class="page" id="settings">
+  <div class="hero"><h3>我的內容設定</h3><p>這裡定義「什麼才像甜甜」。之後不管寫 FB、IG、Threads 或口播，都以這套規則為基礎。</p></div>
+  <div class="grid">
+    <div class="card span6"><h4>你的定位</h4><label>身份</label><input id="setIdentity" value="身心靈老師／能量與吸引力法則創作者"><br><label>核心受眾</label><textarea id="setAudience">30–40+女性，想讓自己變漂亮、變有錢、活得更自由，也對能量、顯化、自我成長有興趣。</textarea><br><label>內容方向</label><textarea id="setPillars">能量、吸引力法則、顯化、女性成長、關係界線、生活觀點、媽媽日常、金錢與自由</textarea></div>
+    <div class="card span6"><h4>你的寫作規則</h4>
+      <label class="check"><input id="r1" type="checkbox" checked> 開頭直接講痛點／結論</label>
+      <label class="check"><input id="r2" type="checkbox" checked> 像跟朋友聊天，不要 AI 感</label>
+      <label class="check"><input id="r3" type="checkbox" checked> 情緒共鳴＋實際方法</label>
+      <label class="check"><input id="r4" type="checkbox" checked> 不要太文青、太說教、太玄</label>
+      <label class="check"><input id="r5" type="checkbox" checked> 有觀點，但不要生硬</label>
+      <label class="check"><input id="r6" type="checkbox" checked> CTA 自然，不硬逼留言</label>
+      <br><button onclick="saveSettings()">儲存設定</button>
+    </div>
+    <div class="card span12"><h4>☁️ 手機／電腦雲端同步</h4>
+      <p class="small">把下面的 Supabase 設定填好後，你在手機和電腦登入同一個帳號，就會使用同一份內容資料。沒有連上雲端時，平台仍可照常使用本機資料。</p>
+      <label>Supabase Project URL</label><input id="sbUrl" placeholder="例如 https://xxxxx.supabase.co">
+      <label>Supabase Publishable Key</label><textarea id="sbKey" placeholder="貼上 Supabase 的 publishable key（舊專案可能顯示 anon key）"></textarea>
+      <div class="row"><button onclick="saveCloudConfig()">儲存雲端設定</button><button class="ghost" onclick="cloudSignUp()">註冊帳號</button><button class="dark" onclick="cloudSignIn()">登入並同步</button><button class="ghost" onclick="cloudSignOut()">登出</button></div>
+      <div id="cloudStatus" class="notice" style="margin-top:12px">目前尚未連接雲端。</div>
+      <p class="small">第一次使用前，請先在 Supabase 建立資料表並開啟 RLS。下方的「資料庫 SQL」檔我已經幫你一起做好。</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+</div></main></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const $=id=>document.getElementById(id);
+const today=()=>new Date().toISOString().slice(0,10);
+const uid=()=>Date.now()+Math.random().toString(16).slice(2);
+const load=(k,d=[])=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch(e){return d}};
+const K={ideas:'sweet_ideas',tasks:'sweet_tasks',caps:'sweet_caps',stats:'sweet_stats',settings:'sweet_settings'};
+const CLOUD_KEY='sweet_cloud_config';
+let sb=null, cloudUser=null, cloudBusy=false;
+function getCloudConfig(){try{return JSON.parse(localStorage.getItem(CLOUD_KEY)||'null')}catch(e){return null}}
+function setCloudStatus(msg,ok=false){const el=$('cloudStatus');if(el){el.textContent=msg;el.style.borderColor=ok?'#b7dfc3':'#e5d8c8'}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v)); if(sb && cloudUser && !cloudBusy) cloudSave(k,v)}
+function initSupabase(){
+  const c=getCloudConfig();
+  if(!c?.url||!c?.key||!window.supabase) return false;
+  try{ sb=window.supabase.createClient(c.url.trim(),c.key.trim(),{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}); return true; }
+  catch(e){ sb=null; setCloudStatus('雲端設定格式有問題，請檢查 URL 與 Key。'); return false; }
+}
+async function cloudSave(k,v){
+  if(!sb||!cloudUser)return;
+  try{const {error}=await sb.from('content_os_data').upsert({user_id:cloudUser.id,data_key:k,data:v,updated_at:new Date().toISOString()},{onConflict:'user_id,data_key'}); if(error) throw error;}
+  catch(e){console.warn('Cloud save failed',e);setCloudStatus('本機已儲存，但雲端同步失敗：'+e.message);}
+}
+async function cloudPull(){
+  if(!sb||!cloudUser)return;
+  cloudBusy=true;
+  try{
+    const {data,error}=await sb.from('content_os_data').select('data_key,data').eq('user_id',cloudUser.id);
+    if(error)throw error;
+    (data||[]).forEach(r=>localStorage.setItem(r.data_key,JSON.stringify(r.data)));
+    renderIdeas();renderTasks();renderCaptions();renderStats();loadSettings();updateCounts();updateWeek();
+    setCloudStatus('☁️ 已同步：手機／電腦現在共用同一份資料。',true);
+  }catch(e){setCloudStatus('登入成功，但讀取雲端資料失敗：'+e.message);}
+  finally{cloudBusy=false;}
+}
+async function cloudAuthReady(){
+  if(!initSupabase()) return;
+  const {data:{session}}=await sb.auth.getSession();
+  cloudUser=session?.user||null;
+  if(cloudUser) await cloudPull(); else setCloudStatus('已設定雲端，但尚未登入。');
+  sb.auth.onAuthStateChange((_event,session)=>{cloudUser=session?.user||null;if(cloudUser) cloudPull();else setCloudStatus('已登出，現在使用本機資料。');});
+}
+function saveCloudConfig(){
+  const url=esc($('sbUrl').value),key=esc($('sbKey').value);
+  if(!url||!key){alert('請先填入 Supabase Project URL 和 Publishable Key');return;}
+  localStorage.setItem(CLOUD_KEY,JSON.stringify({url,key})); initSupabase(); setCloudStatus('雲端設定已儲存，請按「註冊帳號」或「登入並同步」。'); toast('雲端設定已儲存');
+}
+async function cloudSignUp(){
+  if(!initSupabase()){alert('請先儲存 Supabase URL 和 Publishable Key');return;}
+  const email=prompt('請輸入你的 Email'); if(!email)return; const password=prompt('請設定密碼（至少 6 碼）'); if(!password)return;
+  const {error}=await sb.auth.signUp({email,password});
+  if(error){alert('註冊失敗：'+error.message);return;}
+  alert('註冊完成！如果 Supabase 開啟 Email 驗證，請先到信箱完成驗證，再回來按「登入並同步」。');
+}
+async function cloudSignIn(){
+  if(!initSupabase()){alert('請先儲存 Supabase URL 和 Publishable Key');return;}
+  const email=prompt('請輸入 Email'); if(!email)return; const password=prompt('請輸入密碼'); if(!password)return;
+  const {data,error}=await sb.auth.signInWithPassword({email,password});
+  if(error){alert('登入失敗：'+error.message);return;}
+  cloudUser=data.user; await cloudPull(); toast('已登入並同步');
+}
+async function cloudSignOut(){if(!sb)return; await sb.auth.signOut();cloudUser=null;setCloudStatus('已登出，現在使用本機資料。');toast('已登出雲端');}
+function loadCloudConfig(){const c=getCloudConfig();if(c){$('sbUrl').value=c.url||'';$('sbKey').value=c.key||'';initSupabase();}}
+let currentOut='fb', genSections=[];
+
+const pages={home:'今日工作台',engine:'一題多平台',ideas:'選題百寶箱',script:'口播工廠',plan:'排程看板',library:'文案庫',stats:'成效紀錄',settings:'我的設定'};
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function showPage(p){
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  $(p).classList.add('active');$('pageTitle').textContent=pages[p];
+  if(p==='stats')renderStats(); if(p==='plan')renderTasks();
+}
+function toast(t){const x=$('toast');x.textContent=t;x.style.display='block';clearTimeout(window._toast);window._toast=setTimeout(()=>x.style.display='none',1800)}
+function esc(t){return (t||'').trim()}
+function copyText(t){navigator.clipboard?.writeText(t);toast('已複製')}
+function copyId(id){copyText($(id).textContent)}
+function useIdea(t){showPage('engine');$('topic').value=t;generateLocal()}
+
+function generateLocal(){
+  const t=esc($('topic').value)||'你的核心主題';
+  const story=esc($('story').value);
+  const pillar=$('pillar').value;
+  const tone=$('tone').value;
+  const base=story?`我的真實想法：${story}`:'我想講的不是大道理，而是很多人每天真的正在經歷的事。';
+  $('fb').textContent=`【${t}】\n\n很多人以為，${t}是因為自己不夠努力。\n但我反而覺得，真正需要先處理的，是你每天把時間和能量放在哪裡。\n\n${base}\n\n所以如果你最近也有這種感覺，可以先問自己三個問題：\n1. 現在最消耗我的事情是什麼？\n2. 這件事真的值得我一直放在心上嗎？\n3. 如果把這份能量收回來，我最想拿去做什麼？\n\n身心靈不是叫你什麼都不要管，而是先把自己放回人生的主位。\n\n#${pillar.split('／')[0]} #自我成長 #甜甜`;
+  $('ig').textContent=`${t}\n\n你可以很努力，但不代表你要把所有人、所有事都扛在身上。\n\n${base}\n\n真正的能量管理，不是每天逼自己正能量，而是知道什麼該靠近、什麼該放下。\n\n今天給自己3個小練習：\n① 找出一件最近最消耗你的事\n② 問自己「這真的需要我處理嗎？」\n③ 把收回來的時間，拿去照顧自己\n\n如果這段話剛好說中你，先收藏起來。`;
+  $('threads').textContent=`${t}\n\n我以前也以為，能量低就是自己狀態不好。\n後來才發現，有時候不是你沒能量，是你把能量花在太多不值得的地方。\n\n${base}\n\n人真的會在開始把自己放回第一順位之後，慢慢不一樣。`;
+  $('reels').textContent=`【60秒口播｜${tone}】\n\n如果你最近一直覺得很累，我先講結論：你不一定是真的沒能量，你可能只是把能量花錯地方了。\n\n很多人一累，就逼自己撐住、再努力一點、再正能量一點。\n但我做身心靈之後，反而越來越覺得，真正的能量管理不是一直補自己，而是先停止漏能量。\n\n你可以先做3件事：\n第一，找出最近最消耗你的事情。\n第二，問自己這件事是不是一定要由我處理。\n第三，把省下來的能量拿回來，做真正重要的事。\n\n你不用每天都很有能量，但你要知道自己的能量到底去哪裡了。\n\n如果你想知道自己的能量狀態，可以留言「能量」。`;
+  showOut('fb',document.querySelector('.tab'));
+  toast('四平台內容已產出');
+}
+function showOut(id,el){document.querySelectorAll('.output').forEach(x=>x.style.display='none');$(id).style.display='block';document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));el.classList.add('on');currentOut=id}
+function copyCurrent(){copyText($(currentOut).textContent)}
+
+async function generateAI(){
+  const topic=esc($('topic').value); if(!topic){alert('請先輸入主題');return}
+  if(typeof claude==='undefined'||!claude.use){toast('請在 Claude Artifact 環境中使用 AI 功能');return}
+  const prompt=`你是一位台灣身心靈老師「甜甜」的內容助手。\n身份：${$('setIdentity').value}\n受眾：${$('setAudience').value}\n內容方向：${$('setPillars').value}\n寫作規則：開頭直接講痛點／結論、像朋友聊天、清醒直白有力量、有情緒共鳴也有乾貨、不文青不說教不過度玄、CTA自然。\n主題：${topic}\n內容分類：${$('pillar').value}\n語氣：${$('tone').value}\n真實觀點：${$('story').value||'無'}\n\n請只輸出純文字，依序使用以下區塊標題：\n===FB===\n約250-400字\n===IG===\n約150-250字\n===Threads===\n約80-180字\n===60秒口播===\n約150-220字，開頭鉤子＋痛點＋3個具體做法＋CTA。`;
+  toast('AI 產生中…');
+  try{
+    const sample=await claude.use('sample');
+    const res=await sample(prompt,{modelTier:'default'});
+    renderAI(res.text||'');
+    toast('Claude AI 已產出');
+  }catch(e){toast('AI 產生失敗，已保留內建模板功能')}
+}
+function renderAI(text){
+  const p=text.split(/===(.+?)===/).filter(x=>x.trim());
+  genSections=[];
+  for(let i=0;i<p.length;i+=2)genSections.push({title:p[i].trim(),content:(p[i+1]||'').trim()});
+  const map={FB:'fb',IG:'ig',Threads:'threads','60秒口播':'reels'};
+  genSections.forEach(s=>{if(map[s.title])$(map[s.title]).textContent=s.content});
+  showOut('fb',document.querySelector('.tab'));
+}
+
+function saveAllAsTasks(){
+  const map=[['IG','貼文','ig'],['FB','貼文','fb'],['Threads','貼文','threads'],['Reels','口播','reels']];
+  const topic=esc($('topic').value)||'未命名主題',list=load(K.tasks);
+  map.forEach(([p,type,id])=>list.push({id:uid(),date:today(),platform:p,type,title:topic,caption:$(id).textContent,done:false}));
+  save(K.tasks,list);toast('四平台已全部放進排程');renderTasks();
+}
+function saveCurrentCaption(){
+  const list=load(K.caps);list.push({id:uid(),tag:esc($('pillar').value),platform:currentOut==='reels'?'Reels':currentOut==='threads'?'Threads':currentOut.toUpperCase(),content:$(currentOut).textContent});
+  save(K.caps,list);renderCaptions();updateCounts();toast('已存進文案庫');
+}
+
+const defaultIdeas=[
+  ['你不是沒能量，是每天把能量花在不值得的人身上','能量'],
+  ['有些關係不是你不夠好，是你該停止討好了','關係'],
+  ['顯化不是一直想，而是你的生活開始配得上它','顯化'],
+  ['40歲以後，我越來越不想證明自己','女性成長']
+];
+function renderIdeas(){
+  let l=load(K.ideas);
+  if(!l.length){l=defaultIdeas.map(x=>({id:uid(),title:x[0],type:x[1]}));save(K.ideas,l)}
+  $('ideaList').innerHTML=l.map(i=>`<div class="item"><strong>${i.title}</strong><small><span class="tag">${i.type}</span>　<button class="ghost" onclick="useIdea(${JSON.stringify(i.title)})">做成內容</button> <button class="ghost" onclick="delIdea('${i.id}')">刪除</button></small></div>`).join('');
+  $('ideaCount').textContent=l.length;
+}
+function addIdea(){const t=esc($('ideaInput').value);if(!t)return;const l=load(K.ideas);l.unshift({id:uid(),title:t,type:$('ideaType').value});save(K.ideas,l);$('ideaInput').value='';renderIdeas();toast('已放進選題百寶箱')}
+function delIdea(id){save(K.ideas,load(K.ideas).filter(x=>x.id!==id));renderIdeas()}
+function addTask(){
+  const t={id:uid(),date:$('taskDate').value||today(),platform:$('taskPlatform').value,type:$('taskType').value,title:esc($('taskTitle').value),caption:$('taskCaption').value,done:false};
+  if(!t.title){alert('請輸入主題');return}const l=load(K.tasks);l.push(t);save(K.tasks,l);$('taskTitle').value='';$('taskCaption').value='';renderTasks();toast('已加入排程')
+}
+function renderTasks(){
+  const f=$('taskFilter').value;let l=load(K.tasks).sort((a,b)=>a.date.localeCompare(b.date));if(f)l=l.filter(x=>x.platform===f);
+  $('taskList').innerHTML=l.length?l.map(t=>`<div class="item"><span class="tag ${t.platform==='IG'?'ig':t.platform==='FB'?'fb':t.platform==='Threads'?'th':''}">${t.platform}</span><span class="tag">${t.type}</span> <strong>${t.title}</strong><small>${t.date}　${t.done?'✓ 已完成':'未完成'}</small>${t.caption?`<div class="output" style="min-height:0;margin-top:7px;font-size:12px">${safe(t.caption)}</div>`:''}<button class="ghost" onclick="toggleTask('${t.id}')">${t.done?'取消完成':'標記完成'}</button> <button class="ghost" onclick="delTask('${t.id}')">刪除</button></div>`).join(''):'<div class="empty">目前沒有排程</div>';
+}
+function safe(s){return (s||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toggleTask(id){const l=load(K.tasks);const x=l.find(t=>t.id===id);if(x)x.done=!x.done;save(K.tasks,l);renderTasks();updateWeek()}
+function delTask(id){save(K.tasks,load(K.tasks).filter(x=>x.id!==id));renderTasks();updateWeek()}
+function applyWeekPlan(){
+  const topics=['你不是沒能量，是每天把能量花在不值得的人身上','真正高能量的人，不急著證明自己','顯化不是一直想，而是開始做配得上的選擇','40歲以後，我越來越不想討好所有人','有錢之後，我反而戒掉這3種消耗','關係裡最重要的不是被喜歡，而是有界線','你越敢做自己，越容易遇到對的人'];
+  const l=load(K.tasks),base=new Date();
+  topics.forEach((x,i)=>{const d=new Date(base);d.setDate(base.getDate()+i);l.push({id:uid(),date:d.toISOString().slice(0,10),platform:i%2?'Threads':'IG',type:i%2?'貼文':'Reels',title:x,caption:'先用這個主題做內容，再到「一題多平台」生成完整版本。',done:false})});
+  save(K.tasks,l);renderTasks();toast('7天內容計畫已加入')
+}
+function addCaption(){const c={id:uid(),tag:esc($('capTag').value)||'未分類',platform:$('capPlatform').value,content:esc($('capContent').value)};if(!c.content)return;const l=load(K.caps);l.unshift(c);save(K.caps,l);$('capTag').value='';$('capContent').value='';renderCaptions();updateCounts();toast('已存進文案庫')}
+function renderCaptions(){
+  const q=esc($('capSearch').value).toLowerCase(),l=load(K.caps).filter(c=>(c.tag+c.platform+c.content).toLowerCase().includes(q));
+  $('captionList').innerHTML=l.length?l.map(c=>`<div class="item"><span class="tag">${safe(c.tag)}</span><span class="tag">${c.platform}</span><div class="output" style="min-height:0;margin-top:7px;font-size:12px">${safe(c.content)}</div><button onclick="copyText(${JSON.stringify(c.content)})">複製</button> <button class="ghost" onclick="delCaption('${c.id}')">刪除</button></div>`).join(''):'<div class="empty">還沒有文案</div>';
+}
+function delCaption(id){save(K.caps,load(K.caps).filter(x=>x.id!==id));renderCaptions();updateCounts()}
+function makeScript(){
+  const t=esc($('scriptTopic').value)||'這個主題',c=esc($('cta').value)||'留言告訴我',note=esc($('scriptNote').value);
+  $('scriptOut').textContent=`【${t}｜60秒口播】\n\n如果你最近一直有這種感覺，我先講結論：你不一定是真的不夠努力。\n\n很多人遇到問題，第一件事就是怪自己、逼自己、再撐一下。\n但我做身心靈之後，反而越來越發現，很多時候真正要調整的不是「再努力一點」，而是你現在的狀態。\n\n所以我會建議你先做3件事：\n第一，停一下，先看見自己現在到底在累什麼。\n第二，把最消耗你的事情列出來，不要全部一起處理。\n第三，先把一點時間還給自己，讓自己重新有空間。\n\n${note?`補充：${note}\n\n`:''}你不用每天都很有力量，但你可以開始學會不要一直把自己的力量交出去。\n\n${c}。`;
+  toast('口播已生成')
+}
+function saveScript(){const l=load(K.tasks);l.push({id:uid(),date:today(),platform:'Reels',type:'口播',title:esc($('scriptTopic').value)||'口播主題',caption:$('scriptOut').textContent,done:false});save(K.tasks,l);toast('口播已存進排程')}
+function addStat(){
+  const s={id:uid(),date:$('statDate').value||today(),topic:esc($('statTopic').value),platform:$('statPlatform').value,views:Number($('views').value||0),engage:Number($('engage').value||0)};
+  if(!s.topic){alert('請輸入主題');return}const l=load(K.stats);l.unshift(s);save(K.stats,l);$('statTopic').value='';$('views').value='';$('engage').value='';renderStats();toast('成效已記錄')
+}
+function renderStats(){
+  const l=load(K.stats);
+  $('statsList').innerHTML=l.length?l.map(s=>`<div class="item"><strong>${safe(s.topic)}</strong><small>${s.date}　｜　${s.platform}　｜　曝光 ${s.views.toLocaleString()}　｜　互動 ${s.engage.toLocaleString()}</small><button class="ghost" onclick="delStat('${s.id}')">刪除</button></div>`).join(''):'<div class="empty">還沒有成效紀錄</div>';
+  const by={};l.forEach(s=>{by[s.platform]??={views:0,engage:0,count:0};by[s.platform].views+=s.views;by[s.platform].engage+=s.engage;by[s.platform].count++});
+  $('statSummary').innerHTML=Object.keys(by).length?Object.entries(by).map(([p,v])=>`<div class="stat-card span3"><span class="tag">${p}</span><br><strong>${v.views.toLocaleString()}</strong><div class="small">累積曝光｜${v.count}筆</div><div class="small">累積互動 ${v.engage.toLocaleString()}</div></div>`).join(''):'<div class="empty">先記錄幾筆內容，這裡就會開始有資料</div>';
+}
+function delStat(id){save(K.stats,load(K.stats).filter(x=>x.id!==id));renderStats()}
+function updateWeek(){
+  const start=new Date();start.setDate(start.getDate()-start.getDay()+1);start.setHours(0,0,0,0);const end=new Date(start);end.setDate(start.getDate()+7);
+  const n=load(K.tasks).filter(t=>t.done&&new Date(t.date)>=start&&new Date(t.date)<end).length;$('weekCount').textContent=n;$('weekBar').style.width=Math.min(100,n*15)+'%';
+}
+function updateCounts(){$('capCount').textContent=load(K.caps).length;$('ideaCount').textContent=load(K.ideas).length}
+function saveSettings(){
+  save(K.settings,{identity:$('setIdentity').value,audience:$('setAudience').value,pillars:$('setPillars').value,rules:[1,2,3,4,5,6].map(i=>$('r'+i).checked)});
+  toast('內容設定已儲存')
+}
+function loadSettings(){
+  const s=load(K.settings,null);if(!s)return;
+  $('setIdentity').value=s.identity||$('setIdentity').value;$('setAudience').value=s.audience||$('setAudience').value;$('setPillars').value=s.pillars||$('setPillars').value;
+  (s.rules||[]).forEach((v,i)=>{if($('r'+(i+1)))$('r'+(i+1)).checked=v});
+}
+function exportCSV(kind){
+  let rows,fn;
+  if(kind==='captions'){rows=[['標籤','平台','內容'],...load(K.caps).map(x=>[x.tag,x.platform,x.content])];fn='甜甜文案庫.csv'}
+  else {rows=[['日期','平台','類型','主題','文案','完成'],...load(K.tasks).map(x=>[x.date,x.platform,x.type,x.title,x.caption,x.done?'是':'否'])];fn='甜甜內容排程.csv'}
+  const csv='\uFEFF'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=fn;a.click();toast('CSV 已匯出')
+}
+function init(){
+  $('todayDate').textContent=new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+  $('taskDate').value=today();$('statDate').value=today();
+  renderIdeas();renderTasks();renderCaptions();renderStats();loadSettings();loadCloudConfig();updateCounts();updateWeek();cloudAuthReady();
+}
+init();
+</script>
+</body>
+</html>
